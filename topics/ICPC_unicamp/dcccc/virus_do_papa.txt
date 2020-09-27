@@ -1,0 +1,52 @@
+VÍRUS DO PAPA
+
+Dentro de si, todos os sujeitos possuem um valor de rabalabaxeza r, que indica o quanto ele gosta de maratona de programação. 
+Porém, com a popularização das maratonas de programação, surgiu um vírus do tipo Rabalabaxúrias, que possui uma ou mais perninhas e infecta as pessoas de acordo com com seu nível de rabalabaxeza. Desse modo, pessoas com rabalabaxeza igual ao número de perninhas do vírus são infectadas. Por exemplo, um vírus com 3 perninhas consegue contaminar somente uma pessoa com rabalabaxeza 3.
+De modo formal, uma pessoa é contaminada se sua rabalabaxeza for igual ao número de perninhas do vírus, ou seja, se p=r.
+
+Pedro Papa é um estudante muito bom em algorítimos e que gosta muito de problemas de maratona, seu nível de rabalabaxeza inclusive é 101, uma das razões pelas quais ele viaja constantemente para eventos da área. Em um desses eventos, no entanto, Papa contraiu um vírus Rabalabaxúrias e, pela sua rabalabaxeza ser tão alta, o vírus que o Papa contraiu é especial e pode gerar outros vírus com qualquer tamanho que perninhas de 0 até 100, que se espalham a medida de que o Papa espirra.
+
+Com medo dos impactos de seus espirros, Pedro Papa quer saber quantas pessoas que ele vai contaminar sabendo a rabalabaxeza de cada pessoa no evento e o número de perninhas de cada vírus espirrados.
+
+INPUT
+A primeira linha da entrada possui dois inteiros n e m (0<=n,m<=1^5), que corresponde ao número de pessoas no evento
+As próximas n linhas possuem um inteiro r (1<=r<=100), que representa o nível de rabalabaxeza para cada pessoa do evento
+As m linhas seguintes, possuem um inteiro p (1<=p<=100), correspondente ao número de perninhas dos vírus espirrados pelo Papa
+
+OUTPUT
+Responda o número de pessoas infectadas pelo vírus, dadas as rabalabaxezas de cada pessoa e o número de perninhas do vírus.
+
+Input:		Output:
+1 1		1	
+10
+10
+
+Input:		Output:
+3 3		1		
+1
+2
+3
+1
+2
+2
+
+Input:		Output:
+3 4		2
+3
+3
+3
+4
+3
+2
+3
+
+Input:		Output:
+4 3		0		
+70
+80
+60
+90
+100
+100
+100
+

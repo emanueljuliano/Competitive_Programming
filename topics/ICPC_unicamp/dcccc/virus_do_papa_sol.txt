@@ -1,0 +1,7 @@
+SOLUÇÃO VIRUS DO PAPA
+
+Como os números vão de 1 até 100, podemos criar dois arrays de 100 posições e valor inicial 0, um array w para rabalabaxeza das pessoas do evento e outro v para as perninhas do virus.
+
+Ao ler a entrada, fazemos v[p]++ e w[r]++.
+
+Por fim, iteramos pelos dois arrays de 1 até 100 e somamos na resposta o minimo entre v[i] e w[i].

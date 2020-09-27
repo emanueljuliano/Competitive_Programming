@@ -1,0 +1,96 @@
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, 0, 10, 6, 10\}}
+    \end{center}
+    \begin{center}
+        ans = -INF 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{\textcolor{red}{2}, 0, 10, 6, 10\}}
+    \end{center}
+    \begin{center}
+        ans = 2 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, \textcolor{red}{0}, 10, 6, 10\}}
+    \end{center}
+    \begin{center}
+        ans = 2 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, 0, \textcolor{red}{10}, 6, 10\}}
+    \end{center}
+    \begin{center}
+        ans = 10 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, 0, 10, \textcolor{red}{6}, 10\}}
+    \end{center}
+    \begin{center}
+        ans = 10 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, 0, 10, 6, \textcolor{red}{10}\}}
+    \end{center}
+    \begin{center}
+        ans = 10 
+    \end{center}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Exemplo: achar o máximo em um array}
+    \begin{itemize}
+        \item A abordagem gulosa é iniciar nossa resposta com \textit{``-INF''}. e percorrer o array. Em cada iteração, mudamos nossa resposta se o elemento i for maior que nosso máximo atual
+    \end{itemize}
+    \begin{center}
+        \texttt{\{2, 0, 10, 6, 10\}}
+    \end{center}
+    \begin{center}
+        ans = 10 
+    \end{center}
+    \begin{itemize}
+        \item Mas por que isso funciona?
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------
+\begin{frame}[fragile]{Provas}
+    \begin{itemize}
+        \item Imagine, por absurdo, que após sua última comparação, o valor da sua resposta é menor que o máximo do vetor.
+        \item Isso significa que existe uma posição i no vetor, tal que v[i] $\ge$ ans e i $\le$ n
+        \item Mas se isso fosse verdade, v[i] também seria maior que ans na iteração i do algoritimo e nesse caso, nós teriamos redefinido o valor de ans para v[i]
+    \end{itemize}
+\end{frame}
+%-------------------------------------------------------
+

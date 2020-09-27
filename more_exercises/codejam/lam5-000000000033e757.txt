@@ -1,0 +1,140 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define x first
+#define y second
+typedef long long ll;
+
+int gcd(int a, int b){
+    if(b == 0) return a;
+    return gcd(b, a%b);
+}
+
+map<pair<int, int>, vector<pair<int, int> > > mp;
+
+int calcLines(vector<int> &l){
+    int ans = 0;
+    for(int u: l){
+        //printf("%d ", u);
+        ans += (u/2);
+    }
+    //printf(" = ");
+    ans *= 2;
+
+    int bonush = 0, bonusl = 0;
+    for(int u: l){
+        if(u%2){
+            if(u > 1) bonush++;
+            else bonusl++;
+        }
+    }
+
+    int bonus = bonush/2;
+    bonus *= 2;
+
+    int ac = bonush%2 + bonusl;
+    ac = min(ac, 2);
+
+    //printf("%d\n", ans+bonus+ac);
+    return ans+bonus+ac;
+}
+
+
+const int LIMN = 100;
+int root[LIMN], sz[LIMN];
+
+int find(int a){
+    if(root[a] == a) return a;
+    root[a] = find(root[a]);
+}
+
+void join(int a, int b){
+    root[find(a)] = root[find(b)];
+}
+
+int solveAng(vector<pair<int, int> > edges, int qtp){
+
+    for(int i=0; i<qtp; i++){
+        root[i] = i;
+        sz[i] = 0;
+    }
+
+    int lx = -1, cur = 0;
+
+    for(int i=0; i<edges.size(); i++){
+        int a = edges[i].x, b = edges[i].y;
+        if(root[a] != a) continue;
+        root[b] = a;
+    }
+
+    for(int i=0; i<qtp; i++) sz[root[i]]++;
+
+    vector<int> lines;
+    for(int i=0; i<qtp; i++){
+        if(sz[i] != 0) lines.push_back(sz[i]);
+    }
+
+    lines.push_back(cur);
+
+    return calcLines(lines);
+}
+
+
+int solveVert(vector<pair<int, int> > &pt){
+
+    sort(pt.begin(), pt.end());
+
+    vector<int> lines;
+
+    int cur = 1;
+    for(int i=1; i<pt.size(); i++){
+        if(pt[i].x == pt[i-1].x) cur++;
+        else {
+            lines.push_back(cur);
+            cur = 1;
+        }
+    }
+    lines.push_back(cur);
+
+    return calcLines(lines);
+}
+
+int solve(){
+    mp.clear();
+
+    int qtp;
+    scanf("%d",&qtp);
+
+    vector<pair<int, int> > pt(qtp);
+    for(pair<int, int> &p: pt) scanf("%d %d", &p.x, &p.y);
+    sort(pt.begin(), pt.end());
+
+    for(int i=0; i<qtp; i++){
+        for(int j=i+1; j<qtp; j++){
+            if(pt[i].x != pt[j].x){
+
+                int dy = pt[j].y - pt[i].y;
+                int dx = abs(pt[i].x - pt[j].x);
+
+                int gc = dy < 0 ? -gcd(-dy, dx) : gcd(dy, dx);
+                dy /= gc;
+                dx /= gc;
+
+                mp[{dy, dx}].push_back({i, j});
+            }
+        }
+    }
+
+    int ans = 1;
+    for(auto ang: mp) ans = max(ans, solveAng(ang.second, qtp));
+    ans = max(ans, solveVert(pt));
+
+    return ans;
+}
+
+int main(){
+    int qtt;
+    scanf("%d",&qtt);
+    for(int caso=1; caso<=qtt; caso++) printf("Case #%d: %d\n", caso, solve());
+    return 0;
+}

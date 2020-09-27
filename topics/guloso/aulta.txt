@@ -1,0 +1,50 @@
+Slide 1 - O que é um algoritimo guloso?
+Imagine que você tem um problema de otimização, por exemplo, achar o maior elemento em um array.
+Aquilo que o algoritimo guloso faz é, em cada iteração, escolhe um ótimo local, na experança de que essa escolha também seja um ótimo global.
+
+Slide 2 - Exemplo
+Por exemplo, o problema de achar o maior elemento de um vetor:
+A abordagem gulosa seria manter o maior elemento das posições anteriores e definir nossa resposta como sendo o máximo entre o elemento atual e nossa resposta atual:
+resp = max(resp, v[i]);
+
+Slide 3 - Prova do exemplo
+Imagine, por absurdo, que após sua última comparação, o valor da sua resposta é menor que o máximo do vetor.
+Isso significa que existe uma posição i no vetor, tal que v[i]>ans e i<n
+Mas se isso fosse verdade, v[i] também seria maior que ans na iteração i do algoritimo e nesse caso, nós teriamos redefinido o valor de ans para v[i]
+
+Slide 4 - Provas
+Por que isso funciona?
+Num geral, problemas gulosos envolvem que você tenha algum tipo de ideia diferente.
+O que é ótimo, porque desse modo os problemas acabam sendo bem criativos e me parece que essa é a razão do Codeforces por exemplo sempre ter problemas gulosos nos contests.
+Mas isso gera um problema: soluções são normalmente "intuitivas" e os códigos são simples, mas provar sua corretude normalmente é uma tarefa difícil. 
+
+Problema: Escrever um numero como soma de fatoriais, usando a menor quantidade de fatoriais possiveis
+
+Problema motivador: Restaurante
+A primeira parte dos problemas gulosos que iremos tratar é baseada em ordenar os elementos de um vetor de tal modo que a escolha do ótimo local corresponda a um ótimo global
+Prova do algoritimo // Seria show ter indução ne
+Codante e mostrando melhor jeito de fazer
+Imagine que alguém afirma que possui uma resposta melhor que a nossa
+Nesse caso, assuma que antes de uma certa posição i, inclusive a primeira, ele escolheu os mesmos intervalos da nossa resposta e nessa posição ele escolhe um intervalo diferente
+Sendo assim, esse intervalo termina depois da nossa escolha, nesse caso, substituir esse intervalo por aquele que escolhemos ainda garante o mesmo resultado do bernardo, pois ainda não estamos criando nenhuma interseção.
+Logo, nossa resposta é no minimo tão boa quanto a do bernardo e, assim, não existe solução melhor que a nossa.
+
+
+
+Problema: Kadane
+Solução gulosa
+Manteremos uma variável soma_at que nos diz o valor da maior soma que termina na posição atual. Concordamos que, ao percorrer todo o nosso vetor, soma_at nos dirá a soma máxima de todas as posições, e assim teremos a soma máxima do vetor.
+Observações: 
+- Se o vetor for todo positivo, soma_at será uma soma de prefixos, que é a soma de todo mundo até o momento
+- Se o vetor for todo de números negativos, a soma_at será o valor na posição atual do vetor 
+- Soma máxima na posição i só depende da soma máxíma na posição i-1 e do valor v[i]
+
+Solução com soma de prefixo
+
+
+Problema: troco com moedas canônicas -> funciona show :) // Indução?
+Problema: troco com moedas arbritrárias
+Mas então vem a pergunta, como a gente sabe quando podemos usar um algoritimo guloso?
+A resposta é, depende e é dificil de se provar, então vem muito da intuição. Todos os problemas da lista, eu acredito que vocês sejam capazes de provar porque o algoritimo guloso funciona, mas nas competições, esse nem sempre pode ser o caso. Por isso, minha sujestão é fazer o maior número de questões possíveis sobre o tema.
+
+

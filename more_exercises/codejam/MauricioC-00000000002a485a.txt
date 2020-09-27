@@ -1,0 +1,197 @@
+#include <algorithm>
+#include <cassert>
+#include <cstring>
+#include <iostream>
+#include <numeric>
+
+using namespace std;
+
+// ============= BEGIN: Ugly part for a special case =============
+int cap[250][250], flow[250][250], sq[51][51];
+bool visited[250];
+
+void init(int N) {
+    memset(cap, 0, sizeof cap);
+    memset(flow, 0, sizeof flow);
+
+    for (int v = 1; v <= N; v++)
+        cap[0][v] = 1;
+    for (int j = 0; j < N; j++)
+        cap[N+1+j][2*N+1] = 1;
+    for (int v = 1; v <= N; v++)
+        for (int j = 0; j < N; j++)
+            cap[v][N+1+j] = 1;
+
+    for (int i = 0; i < N; i++) {
+        int v = i < N-2 ? 1 : 2;
+        cap[v][N+1+i] -= 1;
+        sq[i][i] = v;
+    }
+}
+
+int p[250];
+
+int dfs(int v, int sink, int c) {
+    if (v == sink)
+        return c;
+    visited[v] = true;
+
+    for (int i = 0; i <= sink; i++) {
+        int w = p[i];
+        if (!visited[w] && cap[v][w] > flow[v][w]) {
+            int ca = dfs(w, sink, min(c, cap[v][w] - flow[v][w]));
+
+            if (ca != 0x3f3f3f3f) {
+                flow[v][w] += ca;
+                flow[w][v] -= ca;
+                return ca;
+            }
+        }
+    }
+
+    return 0x3f3f3f3f;
+}
+
+int maxflow(int source, int sink) {
+    int ret = 0;
+
+    while (true) {
+        iota(p, p+sink+1, 0);
+        random_shuffle(p, p+sink+1);
+        memset(visited, 0, sizeof visited);
+
+        int c = dfs(source, sink, 0x3f3f3f3f);
+        if (c == 0x3f3f3f3f)
+            break;
+
+        ret += c;
+    }
+
+    return ret;
+}
+
+void brute_force_11122_latin_square_because_i_am_dumb(int N) {
+    srand(unsigned(time(0)));
+
+    int K = N+2;
+    init(N);
+
+    for (int i = 0; i < N; i++) {
+        cap[0][sq[i][i]] = 0;
+        cap[N+1+i][2*N+1] = 0;
+
+        if (maxflow(0, 2*N+1) == N-1) {
+            for (int v = 1; v <= N; v++)
+                for (int j = 0; j < N; j++)
+                    if (flow[v][N+1+j] == 1) {
+                        sq[i][j] = v;
+                        cap[v][N+1+j] = 0;
+                    }
+
+            memset(flow, 0, sizeof flow);
+            cap[N+1+i][2*N+1] = 1;
+            cap[0][sq[i][i]] = 1;
+        } else {
+            i = -1;
+            init(N);
+        }
+    }
+}
+// ============== END: Ugly part for a special case ==============
+
+void print(int N, int flip) {
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            printf("%d%c", flip ? N+1 - sq[i][j] : sq[i][j], " \n"[j == N-1]);
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    for (int z = 1; z <= T; z++) {
+        printf("Case #%d: ", z);
+
+        int N, K;
+        cin >> N >> K;
+
+        bool flip = false;
+        if (2*K > (N+1)*N) {
+            flip = true;
+            K = (N+1)*N - K;
+        }
+
+        if (K == N+1) {
+            printf("IMPOSSIBLE\n");
+            continue;
+        }
+
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                sq[i][j] = (i-j+N)%N + 1;
+
+        int m[N+1];
+        iota(m, m+N+1, 0);
+
+        if (K % N == 0)
+            swap(m[1], m[K/N]);
+        else if (N == 3) {
+            printf("IMPOSSIBLE\n");
+            continue;
+        } else {
+            // Find distinct 1 <= A, B, C <= N such that A + B + C*(N-2) = K
+            // Doable in O(1), but boring.
+            int A, B, C;
+            bool ok = false;
+
+            for (int i = 1; i <= N && !ok; i++)
+                for (int j = i+1; j <= N && !ok; j++)
+                    if ((K - i - j) % (N-2) == 0) {
+                        C = (K - i - j) / (N-2);
+                        if (i != C && j != C && C >= 1 && C <= N) {
+                            A = i;
+                            B = j;
+                            ok = true;
+                        }
+                    }
+
+            if (ok) {
+                for (int i = 0; i < N; i++)
+                    swap(sq[i][0], sq[i][1]);
+
+                m[1] = C; m[2] = A; m[N] = B;
+                int cur = 1;
+                for (int i = 3; i < N; i++) {
+                    while (cur == A || cur == B || cur == C)
+                        cur++;
+                    m[i] = cur++;
+                }
+            } else {
+                A = (K - N + 2)/2;
+                assert((K - N) % 2 == 0 && A > 1 && A <= N);
+
+                if (N % 2 == 0) {
+                    for (int i = 0; i < N; i++)
+                        swap(sq[i][0], sq[i][N/2]);
+                    swap(m[N/2 + 1], m[A]);
+                } else {
+                    // Need an example of a latin square with diagonal equal to
+                    // 1 ... 1 2 2 for odd N. I could not find one.
+                    brute_force_11122_latin_square_because_i_am_dumb(N);
+                    swap(m[2], m[A]);
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                sq[i][j] = m[sq[i][j]];
+
+        for (int i = 0; i < N; i++)
+            K -= sq[i][i];
+        assert(K == 0);
+
+        printf("POSSIBLE\n");
+        print(N, flip);
+    }
+}

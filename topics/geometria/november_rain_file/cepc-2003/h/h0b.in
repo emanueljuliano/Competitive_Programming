@@ -1,0 +1,6 @@
+5
+MOV 3 5
+NOT 3
+AND 3 5
+JZ 0 3
+STOP

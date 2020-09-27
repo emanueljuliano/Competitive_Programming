@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define _ ios_base::sync_with_stdio(0);cin.tie(0);
+#define endl '\n'
+#define f first
+#define s second
+#define pb push_back
+
+typedef long long ll;
+typedef pair<int, int> ii;
+
+const int INF = 0x3f3f3f3f;
+const ll LINF = 0x3f3f3f3f3f3f3f3fll;
+
+
+int main(){ _
+	int n, m; cin >> n >> m;
+	if(n==0 and m==0){
+		cout << "Not a moose" << endl;
+	}
+	else if(n==m) cout << "Even " << n+m << endl;
+	else{
+		int maxi = max(n, m);
+		int mini = min(n, m);
+		cout << "Odd " << 2*maxi << endl;
+	}
+	
+	
+	
+	exit(0);
+}

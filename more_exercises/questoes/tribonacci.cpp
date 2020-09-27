@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define _ ios_base::sync_with_stdio(0);cin.tie(0);
+#define endl '\n'
+
+typedef long long int ll;
+typedef vector <ll> vi;
+typedef vector <vi > vii;
+
+const ll MOD = 1e9 + 9;
+
+vii mult(vii m1, vii m2){
+	int n = m1.size();
+	vii m3(n, vi(n, 0));
+	for(ll i=0; i<n; i++){
+		for(ll j=0; j<n; j++){
+			ll soma = 0;
+			for(ll k=0; k<n; k++){
+				soma += (m1[i][k] * m2[k][j])%MOD;
+				soma %= MOD;
+			}
+			m3[i][j] = soma;
+		}
+	}
+	return m3;	
+}
+
+vii identity(ll n){
+	vii v(n, vi(n, 0));
+	for(ll i=0; i<n; i++) v[i][i] = 1;
+	return v;
+}
+
+vii exp(vii m, ll k){
+	if(k==0) return identity(3);
+	if(k==1) return m;
+	if(k%2==0) return exp(mult(m, m), k/2);
+	return mult(m, exp(m, k-1));
+}
+
+ll tribonacci(ll k){
+	vii v(3, vi(3, 0));
+	v[0][0] = v[0][1] = v[0][2] = 1;	
+	v[1][0] = 1;
+	v[2][1] = 1;
+	if(k==1) return 0;
+	if(k==2) return 1;
+	v = exp(v, k-3);
+	return (2*v[0][0] + v[0][1])%MOD; 
+}
+
+int main(){ _
+	ll n;
+	while(true){
+		cin >> n;
+		if(n==0) break;
+		cout << tribonacci(n) << endl;
+	}
+	exit(0);
+}

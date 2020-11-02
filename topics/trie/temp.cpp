@@ -13,72 +13,46 @@ typedef pair<int, int> ii;
 
 const int INF = 0x3f3f3f3f;
 const ll LINF = 0x3f3f3f3f3f3f3f3fll;
-// Trie
-// //
-// // N deve ser maior ou igual ao numero de nos da trie
-// // fim indica se alguma palavra acaba nesse no
-// //
-// // Complexidade:
-// // Inserir e conferir string S -> O(|S|)
-//
-// // usar static trie T
-// // T.insert(s) para inserir
-// // T.find(s) para ver se ta
-// // T.prefix(s) printa as strings
-// // que tem s como prefixo
 
-const int MAX = 1e5+10;
+const int MAX = 3e5;
+
 struct trie{
-	map<char, int> t[MAX+5];
 	int p;
-	trie(){
-		p = 1;
-	}
+	vector<vector<int>> t;
+	vector<int> fim, pref;
+	trie() : t(MAX, vector<int>(26)), fim(MAX), pref(MAX) {p = 1;}
+
 	void insert(string s){
-		s += '$';
-		int i = 0;
-		for (char c : s){
-			auto it = t[i].find(c);
-			if (it == t[i].end())
-				i = t[i][c] = p++;
-			else
-				i = it->second;
+		int x = 0;
+		for(char c : s){
+			int &y = t[x][c-'a'];
+			if(!y) y = p++;
+			x=y;
+			pref[x]++;
 		}
+		fim[x]++;
+	}
+	void erase(string s){
+		int x = 0;
+		for(char c : s){
+			int &y = t[x][c-'a'];
+			x = y, pref[x]--;
+			if(!pref[x]) y = 0;
+		}
+		fim[x]--;
 	}
 	bool find(string s){
-		s += '$';
-		int i = 0;
-		for (char c : s){
-			auto it = t[i].find(c);
-			if (it == t[i].end()) return false;
-			i = it->second;
+		int x = 0;
+		for(char c : s){
+			x = t[x][c-'a'];
+			if(!x) return false;
 		}
-		return true;
-	}
-	void prefix(string &l, int i){
-		if (t[i].find('$') != t[i].end())
-			cout << "  " << l << endl;	
-		for (auto p : t[i]){
-			l += p.first;
-			prefix(l, p.second, k);
-			l.pop_back();
-		}
-	}
-	void prefix(string s){
-		int i = 0;
-		for (char c : s){
-			auto it = t[i].find(c);
-			if (it == t[i].end()) return;
-			i = it->second;
-		}
-		int k = 0;
-		prefix(s, i, k);
+		return fim[x];
 	}
 };
 
 int main(){ _
-
-
+	
 
 	exit(0);
 }

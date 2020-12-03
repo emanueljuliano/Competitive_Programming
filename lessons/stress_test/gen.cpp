@@ -12,21 +12,22 @@ typedef long long ll;
 typedef pair<int, int> ii;
 
 const int INF = 0x3f3f3f3f;
+const ll LINF = 0x3f3f3f3f3f3f3f3fll;
 
+int rand(int a, int b){
+	cout << rand() << endl;
+	return rand()%(b-a+1) + a;
+}
 
-int main(int argc, char**argv){ _
+int main(int argc, char** argv){ _
 	srand(atoi(argv[1]));
-
-	int mod = 100;
-	int n=rand()%mod+1, m=rand()%mod+1, a=rand()%mod+1, d=rand()%mod+1;
-	cout << n << " " << m << " " << a <<" "  << d << endl;
-
-	for(int i=0;i <m; i++){
-		int t=rand()%mod+1;
-		cout << t << " ";
+	int n = rand(1, 4);
+	cout << n << endl;	
+	for(int i=0;i <n; i++){
+		int a = rand(1, 4), b = rand(1, 4);
+		if(a<b) swap(a, b);
+		cout << a << " " << b << endl;
 	}
-	cout << endl;
-	
 	
 	
 	exit(0);

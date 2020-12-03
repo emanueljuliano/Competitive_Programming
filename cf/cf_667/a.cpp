@@ -15,23 +15,13 @@ const int INF = 0x3f3f3f3f;
 
 
 int main(){ _
-	int n, m, a, d; cin >> n >> m >> a >> d;
-
-	vector<int> v(m);
-	for(auto &i : v) cin >> i;
-	for(int i=1; i<=n; i++)
-		v.pb(i*a);
-	
-	sort(v.begin(), v.end());
-	int last = 0, ans = 0;
-
-	for(auto t : v){
-		if(t<=last) continue;
-		ans++;
-		last = t+d;
+	int t; cin >> t;
+	while(t--){
+		int a, b; cin >> a >> b;
+		cout << (abs(a-b)+9)/10 << endl;
 	}
-
-	cout << ans << endl;
-		
+	
+	
+	
 	exit(0);
 }

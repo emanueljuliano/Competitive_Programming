@@ -14,37 +14,37 @@ typedef pair<ll, ll> ii;
 const int INF = 0x3f3f3f3f;
 const ll LINF = 1e14;
 
-map<ii, ll> mp;
-
 vector<ll> v;
 vector<ii> w;
 ll n, k;
-ll solve(int pos, int bul){
+ll dp[(int)2e3+10];
+
+ll solve(int pos){
 	if(pos==n) return 0;
-	if((w[pos].s-w[pos].f)*k+bul < v[pos]) return LINF;
-	
-	ii est = {pos, bul};
-	if(mp.count(est)) return mp[est];
-	
-	ll sobra =  ((bul-v[pos])%k+k)%k;
-	ll res = v[pos] + solve(pos+1, sobra);
-	if(pos != n-1 and w[pos+1].f > w[pos].s) 
-		res = min(res, v[pos] + sobra + solve(pos+1, k));
-	else if(pos!=n-1 and bul + (w[pos].s-w[pos].f-1)*k >=v[pos]) 
-		res = min(res, v[pos] + sobra + solve(pos+1, k));
-		
-	mp[est] = res;
+	ll &res = dp[pos];
+	if(res != -1) return res;
+	res = LINF;
+	ll at = k, spent=0, at2=0;
+	for(int i=pos; i<n; i++){
+		if(v[i]>at+k*(w[i].s-w[i].f)) return res;
+		spent+=v[i], at2 = (2*k-spent%k)%k;
+		if(i==n-1) break; 
+		else if(w[i+1].f==w[i].s and v[i]>at+k*(w[i].s-w[i].f-1)) at = at2;
+		else res = min(res, spent+at2+solve(i+1)), at = at2 + (!at2)*k;
+	}
+	res = min(res, spent);
 	return res;
 }
 
 int main(){ _
+	memset(dp, -1, sizeof dp);
 	cin >> n >> k;
 	for(int i=0;i <n; i++){
 		int a, b, c; cin >> a >> b >> c;
 		w.pb({a, b}), v.pb(c);
 	}
 
-	ll ans = solve(0, k);
+	ll ans = solve(0);
 	if(ans >= LINF) cout << -1 << endl;
 	else cout << ans << endl;
 	

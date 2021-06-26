@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define _ ios_base::sync_with_stdio(0);cin.tie(0);
+#define endl '\n'
+
+typedef long long ll;
+
+const int INF = 0x3f3f3f3f;
+const ll LINF = 0x3f3f3f3f3f3f3f3f;
+
+int main(){ _
+	#warning FILE IN 
+    //freopen("file.in", "r", stdin);	
+
+	int t; cin >> t;
+	while (t--) {
+		string s, p; cin >> s >> p;
+		int q; cin >> q;
+
+		vector pref(s.size(), vector<int>(p.size()));
+		for (int i=0; i < s.size(); i++) {
+			for (int j=0; j<p.size() and i+j < s.size(); j++) {
+				if (i+j) pref[i+j][j] += pref[i+j-1][j];
+				if (s[i+j] != p[j]) break;
+				pref[i+j][j]++;
+			}
+		}
+		vector suf(s.size(), vector<int>(p.size()));
+		for (int i=s.size()-1; i>=0; i--) {
+			for (int j=0; j<p.size() and i-j>=0; j++) {
+				int jj = int(p.size())-1-j;
+				if (i-j < s.size()-1) suf[i-j][jj] += suf[i-j+1][jj];
+				if (s[i-j] != p[jj]) break;
+				suf[i-j][jj]++;
+			}
+		}
+		int n = s.size();
+		while (q--) {
+			int l, r; cin >> l >> r; l--, r--;
+			ll ans = pref[l][p.size()-1] * ll(n-r) + suf[r][p.size()-1] * ll(l+1);
+			for (int i=1; i<p.size(); i++) ans += pref[l][i-1] * (ll) suf[r][i];	
+			ll den = ll(n-r) * (l+1);
+			ll g = gcd(den, ans);
+			ans /= g, den /= g;
+			cout << ans << "/" << den << endl;
+		}
+
+	}
+	
+	
+	exit(0);
+}

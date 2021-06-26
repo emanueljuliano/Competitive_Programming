@@ -26,9 +26,8 @@ int main(){ _
 		if(s[i]==')') at++;
 		else at--;
 		if(at==0){
-			if(!(i-it==1 and s[i]==')')){
-				ans += i-it;
-				if(s[i]=='(' and s[it]==')') ans++;
+			if(s[i]=='('){
+				ans += i-it+1;
 			}
 			it = i+1;	
 		}

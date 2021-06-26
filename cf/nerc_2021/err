@@ -1,0 +1,5 @@
+g.cpp: In function ‘int main()’:
+g.cpp:78:27: error: ‘sau’ was not declared in this scope
+   78 |    ans += dist(inter(line(sau, at), line(v[i-1], v[i])), v[i]);
+      |                           ^~~
+make: *** [<builtin>: g] Error 1
